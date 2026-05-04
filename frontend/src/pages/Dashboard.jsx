@@ -151,7 +151,7 @@ export default function Dashboard() {
           </Link>
           <Link
             to="/dashboard/prediction"
-            className="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 dark:bg-cyan-600 dark:hover:bg-cyan-500"
+            className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-600 to-emerald-500 px-4 py-2.5 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition hover:from-cyan-500 hover:to-emerald-400 hover:shadow-cyan-500/30"
           >
             <FiActivity />
             Run Analysis
@@ -430,7 +430,7 @@ export default function Dashboard() {
                 key={index}
                 className="group flex gap-4 rounded-[1.25rem] border border-slate-100 bg-white p-4 shadow-sm transition-all hover:border-cyan-200 hover:shadow-md"
               >
-                <div className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-slate-800 to-slate-950 text-sm font-semibold text-white shadow-inner">
+                <div className="flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-emerald-500 text-sm font-semibold text-white shadow-inner">
                   {index + 1}
                 </div>
                 <p className="text-sm font-medium text-slate-700 leading-relaxed group-hover:text-slate-900">{action}</p>

@@ -1,5 +1,6 @@
-import { FiBell, FiMenu } from "react-icons/fi";
+import { FiBell, FiMenu, FiSun, FiMoon } from "react-icons/fi";
 import { useApp } from "../context/AppContext";
+import { useTheme } from "../context/ThemeContext";
 
 function getInitials(name = "") {
   return name
@@ -12,6 +13,7 @@ function getInitials(name = "") {
 
 export default function Navbar({ title, subtitle, onMenuToggle }) {
   const { user, currentPrediction } = useApp();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <header className="page-enter relative z-10 overflow-hidden rounded-2xl border border-slate-200 bg-white/80 px-4 py-4 shadow-sm backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/80 sm:px-6">
@@ -39,6 +41,15 @@ export default function Navbar({ title, subtitle, onMenuToggle }) {
               ? `${currentPrediction.riskLevel} RI Active`
               : "Pulse Engine Synced"}
           </div>
+
+          <button
+            type="button"
+            onClick={toggleTheme}
+            className="inline-flex rounded-2xl border border-slate-200 bg-white/80 p-3 text-slate-600 shadow-sm hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-300 dark:hover:bg-slate-800 transition-colors"
+            aria-label="Toggle Dark Mode"
+          >
+            {theme === "dark" ? <FiSun /> : <FiMoon />}
+          </button>
 
           <button
             type="button"

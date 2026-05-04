@@ -8,6 +8,7 @@ import {
   FiCpu,
 } from "react-icons/fi";
 import { useApp } from "../context/AppContext";
+import ProcessingModal from "../component/ProcessingModal";
 import Loader from "../component/Loader";
 import toast from "react-hot-toast";
 
@@ -17,28 +18,31 @@ export default function Prediction() {
   const [isRunning, setIsRunning] = useState(false);
   const [error, setError] = useState("");
   const [isExiting, setIsExiting] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const canRun = profileCompletion.isReady;
 
   const handleRun = () => {
     setError("");
-    setIsRunning(true);
+    setIsModalOpen(true);
+  };
 
-    // Small delay for the loader UX to feel intentional
-    setTimeout(() => {
-      try {
-        runPrediction();
-        toast.success("Prediction complete");
-        setIsExiting(true);
-        setTimeout(() => {
-          navigate("/dashboard/results");
-        }, 280);
-      } catch (err) {
-        toast.error(err.message);
-        setError(err.message);
-        setIsRunning(false);
-      }
-    }, 1500);
+  const handleModalComplete = () => {
+    setIsModalOpen(false);
+    setIsRunning(true);
+    
+    try {
+      runPrediction();
+      toast.success("Prediction complete");
+      setIsExiting(true);
+      setTimeout(() => {
+        navigate("/dashboard/results");
+      }, 280);
+    } catch (err) {
+      toast.error(err.message);
+      setError(err.message);
+      setIsRunning(false);
+    }
   };
 
   const readinessItems = [
@@ -63,6 +67,8 @@ export default function Prediction() {
   }
 
   return (
+    <>
+    <ProcessingModal isOpen={isModalOpen} onComplete={handleModalComplete} />
     <div className={`page-enter space-y-8 ${isExiting ? "page-exit" : ""}`}>
       {/* Hero */}
       <div className="mb-8">
@@ -139,7 +145,7 @@ export default function Prediction() {
             <button
               type="button"
               onClick={handleRun}
-              className="mt-2 inline-flex items-center gap-2 rounded-xl bg-slate-900 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-slate-800 dark:bg-cyan-600 dark:hover:bg-cyan-500"
+              className="mt-2 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-600 to-emerald-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-cyan-500/20 transition-all hover:scale-105 hover:shadow-cyan-500/30"
             >
               Run AI prediction
               <FiArrowRight />
@@ -185,5 +191,6 @@ export default function Prediction() {
         </section>
       )}
     </div>
+    </>
   );
 }
